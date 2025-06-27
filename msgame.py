@@ -4,22 +4,12 @@ for i in range(9):
     gezi.append([])
     for j in range(9):
        gezi[i].append(False)
-d=82
-for g in range(10):
-    c=random.randint(0,81)
-    if c==d:
-        c=random.randint(0,81)
-    elif c==d:
-        c=random.randint(0,81)
-    elif c==d:
-        c=random.randint(0,81)
-    elif c==d:
-        c=random.randint(0,81)
-    else:
-        e=c//9
-        if e==9:
-            e=e-1
-        f=c%9
+a=0
+while a<10:
+    c=random.randint(0,80)
+    e=c//9
+    f=c%9
+    if not gezi[e][f]:
         gezi[e][f]=True
-        d=e
+        a=a+1
 print(gezi)
