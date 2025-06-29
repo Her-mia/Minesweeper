@@ -10,7 +10,7 @@ while keep_going:
             keep_going=False
     for x in range(len(gezi)):
         for y in range(len(gezi[x])):
-            if gezi[x][y]:
+            if gezi[x][y]==-1:
                 screen.blit(pic,(y*32,x*32))
     pygame.display.update()
             
@@ -18,7 +18,7 @@ while keep_going:
 pygame.quit()
 
 
-print(gezi)
+
 # print(x)
 # print(y)
 
