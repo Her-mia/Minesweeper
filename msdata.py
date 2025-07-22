@@ -1,5 +1,4 @@
 import random
-import pygame
 gezi=[]
 gezi1=[]
 zhuangtai=[]
@@ -35,9 +34,9 @@ for i in range(len(gezi)+2):
             gezi1[i][j]=0
         elif i<10 and j<10:
             gezi1[i][j]=gezi[i-1][j-1]
-print(gezi1)
-for x in range(1,len(gezi)):
-    for y in range(1, len(gezi)):
+#print(gezi1)
+for x in range(1,len(gezi)+1):
+    for y in range(1,len(gezi)+1):
         lei=0
         if gezi1[x][y]==-1:
             continue
