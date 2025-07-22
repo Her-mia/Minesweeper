@@ -1,12 +1,17 @@
 import random
+import pygame
 gezi=[]
 gezi1=[]
+zhuangtai=[]
+keep_going=True
 b=0
+#初始化gezi列表
 for i in range(9):
     gezi.append([])
     for j in range(9):
        gezi[i].append(0)
 a=0
+#gezi列表设置雷
 while a<10:
     c=random.randint(0,80)
     e=c//9
@@ -14,7 +19,12 @@ while a<10:
     if not gezi[e][f]:
         gezi[e][f]=-1
         a=a+1
-
+#zhuangtai列表设置
+for i in range(9):
+    zhuangtai.append([])
+    for j in range(9):
+       zhuangtai[i].append(0)
+#算出格子旁边有多少雷
 for i in range(len(gezi)+2):
     gezi1.append([])
     for j in range(len(gezi)+2):
@@ -49,4 +59,3 @@ for x in range(1,len(gezi)):
             lei+=1
         gezi[x-1][y-1]=lei
 print(gezi) 
-
