@@ -17,36 +17,55 @@ pic8=pygame.image.load("png/grid7.png")
 pic9=pygame.image.load("png/grid8.png")
 pic10=pygame.image.load("png/grid.png")
 pic11=pygame.image.load("png/mineClicked.png")
+pic12=pygame.image.load("png/flag.png")
 def open(x,y):
     if x<=8 and y<=8 and x>=0 and y>=0:
-        zhuangtai[x][y]=1
         print(x,y)
+        if gezi[x][y] != 0:
+            zhuangtai[x][y] = 1
         if gezi[x][y]==0:
-            open(x+1,y+1)
-            open(x+1,y)
-            open(x+1,y-1)
-            # open(x,y+1)
-            # open(x,y-1)
-            # open(x-1,y+1)
-            # open(x-1,y)
-            # open(x-1,y+1)
+            chuli=[]
+            chuli.append((x,y))
+            while len(chuli)>0:
+                c=chuli.pop(0)
+                zhuangtai[c[0]][c[1]]=1
+                if c[0]-1<=8 and c[0]-1>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]-1][c[1]-1]==0 and (c[0]-1, c[1]-1) not in chuli and zhuangtai[c[0]-1][c[1]-1]!=1:
+                    chuli.append((c[0]-1,c[1]-1))
+                if c[0]-1<=8 and c[0]-1>=0 and c[1]<=8 and c[1]>=0 and gezi[c[0]-1][c[1]]==0 and (c[0]-1, c[1]) not in chuli and zhuangtai[c[0]-1][c[1]]!=1:
+                    chuli.append((c[0]-1,c[1]))
+                if c[0]-1<=8 and c[0]-1>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]-1][c[1]+1]==0 and (c[0]-1, c[1]+1) not in chuli and zhuangtai[c[0]-1][c[1]+1]!=1:
+                    chuli.append((c[0]-1,c[1]+1))
+                if c[0]<=8 and c[0]>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]][c[1]-1]==0 and (c[0], c[1]-1) not in chuli and zhuangtai[c[0]][c[1]-1]!=1 :
+                    chuli.append((c[0]-1,c[1]-1))
+                if c[0]<=8 and c[0]>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]][c[1]+1]==0 and (c[0], c[1]+1) not in chuli and zhuangtai[c[0]][c[1]+1]!=1:
+                    chuli.append((c[0],c[1]+1))
+                if c[0]+1<=8 and c[0]+1>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]+1][c[1]-1]==0 and (c[0]+1, c[1]-1) not in chuli and zhuangtai[c[0]+1][c[1]-1]!=1:
+                    chuli.append((c[0]+1,c[1]-1))
+                if c[0]+1<=8 and c[0]+1>=0 and c[1]<=8 and c[1]>=0 and gezi[c[0]+1][c[1]]==0 and (c[0]+1, c[1]) not in chuli and zhuangtai[c[0]+1][c[1]]!=1 :
+                    chuli.append((c[0]+1,c[1]))
+                if c[0]+1<=8 and c[0]+1>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]+1][c[1]+1]==0 and (c[0]+1, c[1]+1) not in chuli and zhuangtai[c[0]+1][c[1]+1]!=1:
+                    chuli.append((c[0]+1,c[1]+1))
+                
 
 while keep_going:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             keep_going=False
         if event.type==pygame.MOUSEBUTTONUP:
-            spot=event.pos
-            x=spot[0]//32
-            y=spot[1]//32
-            open(x,y)
+            if event.button == 1:
+                spot=event.pos
+                x=spot[0]//32
+                y=spot[1]//32
+                open(x,y)
+            else:
+                screen.blit(pic12,(y*32,x*32))
             pygame.display.update()        
     for x in range(len(gezi)):
         for y in range(len(gezi[x])):
             
             #打开点击格子
 
-            if zhuangtai[y][x]==0:
+            if zhuangtai[y][x]==1:
                 if gezi[y][x]==-1:
                     screen.blit(pic11,(y*32,x*32))
                 if gezi[y][x]==0:
