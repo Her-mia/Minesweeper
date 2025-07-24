@@ -31,21 +31,44 @@ def open(x,y):
                 zhuangtai[c[0]][c[1]]=1
                 if c[0]-1<=8 and c[0]-1>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]-1][c[1]-1]==0 and (c[0]-1, c[1]-1) not in chuli and zhuangtai[c[0]-1][c[1]-1]!=1:
                     chuli.append((c[0]-1,c[1]-1))
+                if c[0]-1<=8 and c[0]-1>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]-1][c[1]-1]!=0 and gezi[c[0]-1][c[1]-1]!=-1 and (c[0]-1, c[1]-1) not in chuli and zhuangtai[c[0]-1][c[1]-1]!=1:
+                    #zhuangtai[y][x]==1
+                    chuli.append((c[0]-1,c[1]-1))
                 if c[0]-1<=8 and c[0]-1>=0 and c[1]<=8 and c[1]>=0 and gezi[c[0]-1][c[1]]==0 and (c[0]-1, c[1]) not in chuli and zhuangtai[c[0]-1][c[1]]!=1:
+                    chuli.append((c[0]-1,c[1]))
+                if c[0]-1<=8 and c[0]-1>=0 and c[1]<=8 and c[1]>=0 and gezi[c[0]-1][c[1]]!=0 and gezi[c[0]-1][c[1]]!=-1 and (c[0]-1, c[1]) not in chuli and zhuangtai[c[0]-1][c[1]]!=1:
+                    #zhuangtai[y][x]==1
                     chuli.append((c[0]-1,c[1]))
                 if c[0]-1<=8 and c[0]-1>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]-1][c[1]+1]==0 and (c[0]-1, c[1]+1) not in chuli and zhuangtai[c[0]-1][c[1]+1]!=1:
                     chuli.append((c[0]-1,c[1]+1))
+                if c[0]-1<=8 and c[0]-1>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]-1][c[1]+1]!=0 and gezi[c[0]-1][c[1]+1]!=-1 and (c[0]-1, c[1]+1) not in chuli and zhuangtai[c[0]-1][c[1]+1]!=1:
+                    #zhuangtai[y][x]==1
+                    chuli.append((c[0]-1,c[1]+1))
                 if c[0]<=8 and c[0]>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]][c[1]-1]==0 and (c[0], c[1]-1) not in chuli and zhuangtai[c[0]][c[1]-1]!=1 :
-                    chuli.append((c[0]-1,c[1]-1))
+                    chuli.append((c[0],c[1]-1))
+                if c[0]<=8 and c[0]>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]][c[1]-1]!=0 and gezi[c[0]][c[1]-1]!=-1 and (c[0], c[1]-1) not in chuli and zhuangtai[c[0]][c[1]-1]!=1:
+                    #zhuangtai[y][x]==1
+                    chuli.append((c[0],c[1]-1))
                 if c[0]<=8 and c[0]>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]][c[1]+1]==0 and (c[0], c[1]+1) not in chuli and zhuangtai[c[0]][c[1]+1]!=1:
+                    chuli.append((c[0],c[1]+1))
+                if c[0]<=8 and c[0]>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]][c[1]+1]!=0 and gezi[c[0]][c[1]+1]!=-1 and (c[0], c[1]+1) not in chuli and zhuangtai[c[0]][c[1]+1]!=1:
+                    #zhuangtai[y][x]==1
                     chuli.append((c[0],c[1]+1))
                 if c[0]+1<=8 and c[0]+1>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]+1][c[1]-1]==0 and (c[0]+1, c[1]-1) not in chuli and zhuangtai[c[0]+1][c[1]-1]!=1:
                     chuli.append((c[0]+1,c[1]-1))
+                if c[0]+1<=8 and c[0]+1>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]+1][c[1]-1]!=0 and gezi[c[0]+1][c[1]-1]!=-1 and (c[0]+1, c[1]-1) not in chuli and zhuangtai[c[0]+1][c[1]-1]!=1:
+                    #zhuangtai[y][x]==1
+                    chuli.append((c[0]+1,c[1]-1))
                 if c[0]+1<=8 and c[0]+1>=0 and c[1]<=8 and c[1]>=0 and gezi[c[0]+1][c[1]]==0 and (c[0]+1, c[1]) not in chuli and zhuangtai[c[0]+1][c[1]]!=1 :
+                    chuli.append((c[0]+1,c[1]))
+                if c[0]+1<=8 and c[0]+1>=0 and c[1]<=8 and c[1]>=0 and gezi[c[0]+1][c[1]]!=0 and gezi[c[0]+1][c[1]]!=-1 and (c[0]+1, c[1]) not in chuli and zhuangtai[c[0]+1][c[1]]!=1:
+                    #zhuangtai[y][x]==1
                     chuli.append((c[0]+1,c[1]))
                 if c[0]+1<=8 and c[0]+1>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]+1][c[1]+1]==0 and (c[0]+1, c[1]+1) not in chuli and zhuangtai[c[0]+1][c[1]+1]!=1:
                     chuli.append((c[0]+1,c[1]+1))
-                
+                if c[0]+1<=8 and c[0]+1>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]+1][c[1]+1]!=0 and gezi[c[0]+1][c[1]+1]!=-1 and (c[0]+1, c[1]+1) not in chuli and zhuangtai[c[0]+1][c[1]+1]!=1:
+                    #zhuangtai[y][x]==1
+                    chuli.append((c[0]+1,c[1]+1))
 
 while keep_going:
     for event in pygame.event.get():
@@ -57,8 +80,8 @@ while keep_going:
                 x=spot[0]//32
                 y=spot[1]//32
                 open(x,y)
-            else:
-                screen.blit(pic12,(y*32,x*32))
+            # if event.button == 3:
+            #     screen.blit(pic12,(y*32,x*32))
             pygame.display.update()        
     for x in range(len(gezi)):
         for y in range(len(gezi[x])):
