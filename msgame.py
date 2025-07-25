@@ -28,40 +28,15 @@ def open(x,y):
             chuli=[]
             chuli.append((x,y))
             while len(chuli)>0:
+                weizhi=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,-1]]
                 c=chuli.pop(0)
                 zhuangtai[c[0]][c[1]]=1
-                if c[0]-1<=8 and c[0]-1>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]-1][c[1]-1]==0 and (c[0]-1, c[1]-1) not in chuli and zhuangtai[c[0]-1][c[1]-1]!=1:
-                    chuli.append((c[0]-1,c[1]-1))
-                if c[0]-1<=8 and c[0]-1>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]-1][c[1]-1]!=0 and gezi[c[0]-1][c[1]-1]!=-1 and (c[0]-1, c[1]-1) not in chuli and zhuangtai[c[0]-1][c[1]-1]!=1 and a<1:
-                    zhuangtai[c[0]-1][c[0]-1]==1
-                if c[0]-1<=8 and c[0]-1>=0 and c[1]<=8 and c[1]>=0 and gezi[c[0]-1][c[1]]==0 and (c[0]-1, c[1]) not in chuli and zhuangtai[c[0]-1][c[1]]!=1:
-                    chuli.append((c[0]-1,c[1]))
-                if c[0]-1<=8 and c[0]-1>=0 and c[1]<=8 and c[1]>=0 and gezi[c[0]-1][c[1]]!=0 and gezi[c[0]-1][c[1]]!=-1 and (c[0]-1, c[1]) not in chuli and zhuangtai[c[0]-1][c[1]]!=1 and a<1:
-                    zhuangtai[c[0]-1][c[1]]==1
-                if c[0]-1<=8 and c[0]-1>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]-1][c[1]+1]==0 and (c[0]-1, c[1]+1) not in chuli and zhuangtai[c[0]-1][c[1]+1]!=1:
-                    chuli.append((c[0]-1,c[1]+1))
-                if c[0]-1<=8 and c[0]-1>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]-1][c[1]+1]!=0 and gezi[c[0]-1][c[1]+1]!=-1 and (c[0]-1, c[1]+1) not in chuli and zhuangtai[c[0]-1][c[1]+1]!=1 and a<1:
-                    zhuangtai[c[0]-1][c[1]+1]==1
-                if c[0]<=8 and c[0]>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]][c[1]-1]==0 and (c[0], c[1]-1) not in chuli and zhuangtai[c[0]][c[1]-1]!=1 :
-                    chuli.append((c[0],c[1]-1))
-                if c[0]<=8 and c[0]>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]][c[1]-1]!=0 and gezi[c[0]][c[1]-1]!=-1 and (c[0], c[1]-1) not in chuli and zhuangtai[c[0]][c[1]-1]!=1 :
-                    zhuangtai[c[0]][c[1]-1]==1
-                if c[0]<=8 and c[0]>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]][c[1]+1]==0 and (c[0], c[1]+1) not in chuli and zhuangtai[c[0]][c[1]+1]!=1:
-                    chuli.append((c[0],c[1]+1))
-                if c[0]<=8 and c[0]>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]][c[1]+1]!=0 and gezi[c[0]][c[1]+1]!=-1 and (c[0], c[1]+1) not in chuli and zhuangtai[c[0]][c[1]+1]!=1:
-                    zhuangtai[c[0]][c[1]+1]==1
-                if c[0]+1<=8 and c[0]+1>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]+1][c[1]-1]==0 and (c[0]+1, c[1]-1) not in chuli and zhuangtai[c[0]+1][c[1]-1]!=1:
-                    chuli.append((c[0]+1,c[1]-1))
-                if c[0]+1<=8 and c[0]+1>=0 and c[1]-1<=8 and c[1]-1>=0 and gezi[c[0]+1][c[1]-1]!=0 and gezi[c[0]+1][c[1]-1]!=-1 and (c[0]+1, c[1]-1) not in chuli and zhuangtai[c[0]+1][c[1]-1]!=1 :
-                    zhuangtai[c[0]+1][c[1]-1]==1
-                if c[0]+1<=8 and c[0]+1>=0 and c[1]<=8 and c[1]>=0 and gezi[c[0]+1][c[1]]==0 and (c[0]+1, c[1]) not in chuli and zhuangtai[c[0]+1][c[1]]!=1:
-                    chuli.append((c[0]+1,c[1]))
-                if c[0]+1<=8 and c[0]+1>=0 and c[1]<=8 and c[1]>=0 and gezi[c[0]+1][c[1]]!=0 and gezi[c[0]+1][c[1]]!=-1 and (c[0]+1, c[1]) not in chuli and zhuangtai[c[0]+1][c[1]]!=1:
-                    zhuangtai[c[0]+1][c[1]]==1
-                if c[0]+1<=8 and c[0]+1>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]+1][c[1]+1]==0 and (c[0]+1, c[1]+1) not in chuli and zhuangtai[c[0]+1][c[1]+1]!=1:
-                    chuli.append((c[0]+1,c[1]+1))
-                if c[0]+1<=8 and c[0]+1>=0 and c[1]+1<=8 and c[1]+1>=0 and gezi[c[0]+1][c[1]+1]!=0 and gezi[c[0]+1][c[1]+1]!=-1 and (c[0]+1, c[1]+1) not in chuli and zhuangtai[c[0]+1][c[1]+1]!=1 :
-                    zhuangtai[c[0]+1][c[1]+1]==1
+                for i in weizhi:
+                    if c[0]+i[0]<=8 and c[0]+i[0]>=0 and c[1]+i[1]<=8 and c[1]+i[1]>=0 and (c[0]+i[0], c[1]+i[1]) not in chuli and zhuangtai[c[0]+i[0]][c[1]+i[1]]!=1:
+                        if gezi[c[0]+i[0]][c[1]+i[1]]==0:
+                            chuli.append((c[0]+i[0],c[1]+i[1]))
+                        else:
+                            zhuangtai[c[0]+i[0]][c[1]+i[1]]=1
 
 while keep_going:
     for event in pygame.event.get():
