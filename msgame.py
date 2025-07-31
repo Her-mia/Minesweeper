@@ -11,6 +11,7 @@ keep_going=True
 # 0 表示游戏进行中，1表示游戏成功，2表示游戏失败
 game_status = 0
 
+starttime=pygame.time.get_ticks()
 time=0
 pic=pygame.image.load("png/mine.png")
 pic1=pygame.image.load("png/empty.png")
@@ -47,15 +48,21 @@ def open(x,y):
                             zhuangtai[c[0]+i[0]][c[1]+i[1]]=1
 
 def drawHead():
+    global time
     leishu1=str(leishu)
     screen.blit(pic13,(110,0))
     font=pygame.font.SysFont(None,48)
     text1=font.render(leishu1,True,(255,0,0))
     screen.blit(text1,(0,0))
-    time1=str(time)
-    font1=pygame.font.SysFont(None,48)
-    text2=font1.render(time1,True,(255,0,0))
-    screen.blit(text2,(288-48,0))
+    if (pygame.time.get_ticks()//1000)>time:
+        rect = pygame.Rect(240,0,48,48)
+        screen.fill((200,200,200), rect)
+        pygame.display.update(rect)
+        time=pygame.time.get_ticks()//1000
+        time1=str(time)
+        font1=pygame.font.SysFont(None,48)
+        text2=font1.render(time1,True,(255,0,0))
+        screen.blit(text2,(288-48,0))
 
 
 def drawshuzi():
@@ -126,3 +133,4 @@ while keep_going and game_status==0:
         leishu2-=1
     pygame.display.update()
 pygame.quit()
+endtime=pygame.time.get_ticks()
