@@ -1,10 +1,17 @@
 from msdata import gezi
 from msdata import zhuangtai
 import pygame
-a=0
+leishu=10
+leishu2=10
 pygame.init()
-screen=pygame.display.set_mode([288,288])
+screen=pygame.display.set_mode([288,360])
+screen.fill((200,200,200))
 keep_going=True
+
+# 0 表示游戏进行中，1表示游戏成功，2表示游戏失败
+game_status = 0
+
+time=0
 pic=pygame.image.load("png/mine.png")
 pic1=pygame.image.load("png/empty.png")
 pic2=pygame.image.load("png/grid1.png")
@@ -18,13 +25,14 @@ pic9=pygame.image.load("png/grid8.png")
 pic10=pygame.image.load("png/grid.png")
 pic11=pygame.image.load("png/mineClicked.png")
 pic12=pygame.image.load("png/flag.png")
+pic13=pygame.image.load("png/smiley.png")
+pic14=pygame.image.load("png/sad.png")
+a=72
 def open(x,y):
     if x<=8 and y<=8 and x>=0 and y>=0:
-        print(x,y)
         if gezi[x][y] != 0:
             zhuangtai[x][y] = 1
         if gezi[x][y]==0:
-            a=0
             chuli=[]
             chuli.append((x,y))
             while len(chuli)>0:
@@ -38,46 +46,83 @@ def open(x,y):
                         else:
                             zhuangtai[c[0]+i[0]][c[1]+i[1]]=1
 
-while keep_going:
+def drawHead():
+    leishu1=str(leishu)
+    screen.blit(pic13,(110,0))
+    font=pygame.font.SysFont(None,48)
+    text1=font.render(leishu1,True,(255,0,0))
+    screen.blit(text1,(0,0))
+    time1=str(time)
+    font1=pygame.font.SysFont(None,48)
+    text2=font1.render(time1,True,(255,0,0))
+    screen.blit(text2,(288-48,0))
+
+
+def drawshuzi():
+    rect = pygame.Rect(0,0,48,48)
+    screen.fill((200,200,200), rect)
+    pygame.display.update(rect)
+
+
+def drawGame():
+    for x in range(len(gezi)):
+        for y in range(len(gezi[x])):
+            #打开点击格子
+            if zhuangtai[y][x]==1:
+                if gezi[y][x]==-1:
+                    screen.blit(pic11,(y*32,x*32+a))
+                    screen.blit(pic14,(110,0))
+                if gezi[y][x]==0:
+                    screen.blit(pic1,(y*32,x*32+a))
+                if gezi[y][x]==1:
+                    screen.blit(pic2,(y*32,x*32+a))
+                if gezi[y][x]==2:
+                    screen.blit(pic3,(y*32,x*32+a))
+                if gezi[y][x]==3:
+                    screen.blit(pic4,(y*32,x*32+a))
+                if gezi[y][x]==4:
+                    screen.blit(pic5,(y*32,x*32+a))
+                if gezi[y][x]==5:
+                    screen.blit(pic6,(y*32,x*32+a))
+                if gezi[y][x]==6:
+                    screen.blit(pic7,(y*32,x*32+a))
+                if gezi[y][x]==7:
+                    screen.blit(pic8,(y*32,x*32+a))
+                if gezi[y][x]==8:
+                    screen.blit(pic9,(y*32,x*32+a))
+            elif zhuangtai[y][x]!=1 and zhuangtai[y][x]!=2:
+                screen.blit(pic10,(y*32,x*32+a))
+            elif zhuangtai[y][x]!=1:
+                screen.blit(pic12,(y*32,x*32+a))
+
+
+
+while keep_going and game_status==0:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             keep_going=False
         if event.type==pygame.MOUSEBUTTONUP:
-            if event.button == 1:
+            if event.button == 1 :
                 spot=event.pos
                 x=spot[0]//32
-                y=spot[1]//32
-                open(x,y)
-            # if event.button == 3:
-            #     screen.blit(pic12,(y*32,x*32))
-            pygame.display.update()        
-    for x in range(len(gezi)):
-        for y in range(len(gezi[x])):
-            
-            #打开点击格子
-
-            if zhuangtai[y][x]==1:
-                if gezi[y][x]==-1:
-                    screen.blit(pic11,(y*32,x*32))
-                if gezi[y][x]==0:
-                    screen.blit(pic1,(y*32,x*32))
-                if gezi[y][x]==1:
-                    screen.blit(pic2,(y*32,x*32))
-                if gezi[y][x]==2:
-                    screen.blit(pic3,(y*32,x*32))
-                if gezi[y][x]==3:
-                    screen.blit(pic4,(y*32,x*32))
-                if gezi[y][x]==4:
-                    screen.blit(pic5,(y*32,x*32))
-                if gezi[y][x]==5:
-                    screen.blit(pic6,(y*32,x*32))
-                if gezi[y][x]==6:
-                    screen.blit(pic7,(y*32,x*32))
-                if gezi[y][x]==7:
-                    screen.blit(pic8,(y*32,x*32))
-                if gezi[y][x]==8:
-                    screen.blit(pic9,(y*32,x*32))
-            else:
-                screen.blit(pic10,(y*32,x*32))
+                y=spot[1]//32-a//32
+                if zhuangtai[y][x]==2:
+                    leishu+=1
+                    leishu2+=1
+                    drawshuzi()
+                    open(x,y)
+                else:
+                    open(x,y)
+            if event.button == 3 and leishu!=-1:
+                spot=event.pos
+                x=spot[0]//32
+                y=spot[1]//32-a//32
+                zhuangtai[x][y]=2 
+                leishu-=1               
+    drawHead()
+    drawGame()
+    if leishu==leishu2-1:
+        drawshuzi()
+        leishu2-=1
     pygame.display.update()
 pygame.quit()
