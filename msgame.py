@@ -49,20 +49,24 @@ def open(x,y):
 
 def drawHead():
     global time
+    global game_status
     leishu1=str(leishu)
-    screen.blit(pic13,(110,0))
     font=pygame.font.SysFont(None,48)
     text1=font.render(leishu1,True,(255,0,0))
     screen.blit(text1,(0,0))
-    if (pygame.time.get_ticks()//1000)>time:
-        rect = pygame.Rect(240,0,48,48)
+    if game_status==2:
+        screen.blit(pic14,(110,0))
+    else:
+        screen.blit(pic13,(110,0))
+    if (pygame.time.get_ticks()//1000)>time and game_status!=2:
+        rect = pygame.Rect(188,0,48,48)
         screen.fill((200,200,200), rect)
         pygame.display.update(rect)
         time=pygame.time.get_ticks()//1000
         time1=str(time)
         font1=pygame.font.SysFont(None,48)
         text2=font1.render(time1,True,(255,0,0))
-        screen.blit(text2,(288-48,0))
+        screen.blit(text2,(188,0))
 
 
 def drawshuzi():
@@ -72,13 +76,14 @@ def drawshuzi():
 
 
 def drawGame():
+    global game_status
     for x in range(len(gezi)):
         for y in range(len(gezi[x])):
             #打开点击格子
             if zhuangtai[y][x]==1:
                 if gezi[y][x]==-1:
                     screen.blit(pic11,(y*32,x*32+a))
-                    screen.blit(pic14,(110,0))
+                    game_status=2
                 if gezi[y][x]==0:
                     screen.blit(pic1,(y*32,x*32+a))
                 if gezi[y][x]==1:
@@ -126,11 +131,10 @@ while keep_going and game_status==0:
                 y=spot[1]//32-a//32
                 zhuangtai[x][y]=2 
                 leishu-=1               
-    drawHead()
     drawGame()
+    drawHead()
     if leishu==leishu2-1:
         drawshuzi()
         leishu2-=1
     pygame.display.update()
 pygame.quit()
-endtime=pygame.time.get_ticks()
