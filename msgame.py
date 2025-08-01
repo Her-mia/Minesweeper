@@ -109,7 +109,7 @@ def drawGame():
 
 
 
-while keep_going and game_status==0:
+while keep_going:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             keep_going=False
