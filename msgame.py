@@ -54,19 +54,21 @@ def drawHead():
     font=pygame.font.SysFont(None,48)
     text1=font.render(leishu1,True,(255,0,0))
     screen.blit(text1,(0,0))
-    if game_status==2:
-        screen.blit(pic14,(110,0))
-    else:
+    if game_status==0 or game_status==1:
         screen.blit(pic13,(110,0))
+    else:
+        screen.blit(pic14,(110,0))
     if (pygame.time.get_ticks()//1000)>time and game_status!=2:
-        rect = pygame.Rect(188,0,48,48)
+        rect = pygame.Rect(210,0,48,48)
         screen.fill((200,200,200), rect)
         pygame.display.update(rect)
         time=pygame.time.get_ticks()//1000
         time1=str(time)
         font1=pygame.font.SysFont(None,48)
         text2=font1.render(time1,True,(255,0,0))
-        screen.blit(text2,(188,0))
+        screen.blit(text2,(210,0))
+    else:
+        time=0
 
 
 def drawshuzi():
@@ -118,19 +120,19 @@ while keep_going:
                 spot=event.pos
                 x=spot[0]//32
                 y=spot[1]//32-a//32
-                if zhuangtai[y][x]==2:
-                    leishu+=1
-                    leishu2+=1
-                    drawshuzi()
-                    open(x,y)
-                else:
-                    open(x,y)
+                open(x,y)
             if event.button == 3 and leishu!=-1:
                 spot=event.pos
                 x=spot[0]//32
                 y=spot[1]//32-a//32
                 zhuangtai[x][y]=2 
-                leishu-=1               
+                leishu-=1
+        if event.type==pygame.MOUSEBUTTONDOWN and game_status==2: 
+            spot=event.pos
+            x=spot[0]//32
+            y=spot[1]//32
+            print(spot)
+            game_status=0
     drawGame()
     drawHead()
     if leishu==leishu2-1:
