@@ -54,8 +54,7 @@ def makegezi():
                 lei+=1
             if gezi1[x+1][y+1]==-1:
                 lei+=1
-            gezi[x-1][y-1]=lei
-    print(gezi) 
+            gezi[x-1][y-1]=lei 
     game_status=0
     return gezi
 def makezhuangtai():

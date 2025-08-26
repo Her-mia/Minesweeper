@@ -14,6 +14,7 @@ keep_going=True
 starttime=pygame.time.get_ticks()
 time=0
 time2=0
+s=0
 pic=pygame.image.load("png/mine.png")
 pic1=pygame.image.load("png/empty.png")
 pic2=pygame.image.load("png/grid1.png")
@@ -51,6 +52,7 @@ def open(x,y):
 def drawHead():
     global time
     global game_status
+    global s
     leishu1=str(leishu)
     font=pygame.font.SysFont(None,48)
     text1=font.render(leishu1,True,(255,0,0))
@@ -61,14 +63,26 @@ def drawHead():
         screen.blit(pic14,(110,0))
     kaishishijian=pygame.time.get_ticks()//1000-time2
     if kaishishijian>time and game_status==0:
-        rect = pygame.Rect(210,0,48,48)
+        rect = pygame.Rect(s,0,48,48)
         screen.fill((200,200,200), rect)
         pygame.display.update(rect)
         time=kaishishijian
+        time3=time
+        a=1
+        d=0
+        if time3!=0:
+            while time3!=0:
+                z=time3%(a*10)
+                time3=(time3-z)//10
+                d=d+1
+                a=a*10
+        else:
+            d=1
+        s=288-d*23
         time1=str(time)
         font1=pygame.font.SysFont(None,48)
         text2=font1.render(time1,True,(255,0,0))
-        screen.blit(text2,(210,0))
+        screen.blit(text2,(s,0))
 
 
 def drawshuzi():
@@ -119,7 +133,7 @@ while keep_going:
                     keep_going=False
                 if event.type==pygame.MOUSEBUTTONDOWN:
                     spot=event.pos
-                    if (110+64)>=spot[0] and spot[0]>=64 and 64>=spot[1] and spot[1]>=0:
+                    if (110+64)>=spot[0] and spot[0]>=110 and 64>=spot[1] and spot[1]>=0:
                         time2=time+time2
                         gezi=makegezi()
                         zhuangtai=makezhuangtai()
@@ -131,7 +145,7 @@ while keep_going:
                         screen.fill((200,200,200), rect)
                         pygame.display.update(rect)
 
-    while keep_going and game_status!=2:
+    while keep_going and game_status==0:
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 keep_going=False
@@ -153,5 +167,7 @@ while keep_going:
         if leishu==leishu2-1:
             drawshuzi()
             leishu2-=1
+        if leishu2==0:
+            game_status=1
         pygame.display.update()
 pygame.quit()
