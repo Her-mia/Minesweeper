@@ -60,7 +60,6 @@ def drawHead():
     else:
         screen.blit(pic14,(110,0))
     kaishishijian=pygame.time.get_ticks()//1000-time2
-    print(kaishishijian)
     if kaishishijian>time and game_status==0:
         rect = pygame.Rect(210,0,48,48)
         screen.fill((200,200,200), rect)
@@ -115,17 +114,22 @@ def drawGame():
 while keep_going:
     if game_status!=0:
         for event in pygame.event.get():
-            if event.type==pygame.MOUSEBUTTONUP or event.type==pygame.QUIT:
+            if event.type==pygame.MOUSEBUTTONDOWN or event.type==pygame.QUIT:
                 if event.type==pygame.QUIT:
                     keep_going=False
-                if event.type==pygame.MOUSEBUTTONUP:
-                    time2=time
-                    gezi=makegezi()
-                    zhuangtai=makezhuangtai()
-                    game_status=0
-                    time=0
-                    leishu=10
-                    leishu2=10
+                if event.type==pygame.MOUSEBUTTONDOWN:
+                    spot=event.pos
+                    if (110+64)>=spot[0] and spot[0]>=64 and 64>=spot[1] and spot[1]>=0:
+                        time2=time+time2
+                        gezi=makegezi()
+                        zhuangtai=makezhuangtai()
+                        game_status=0
+                        time=0
+                        leishu=10
+                        leishu2=10
+                        rect = pygame.Rect(0,0,48,48)
+                        screen.fill((200,200,200), rect)
+                        pygame.display.update(rect)
 
     while keep_going and game_status!=2:
         for event in pygame.event.get():
