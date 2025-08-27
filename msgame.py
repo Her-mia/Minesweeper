@@ -63,7 +63,7 @@ def drawHead():
         screen.blit(pic14,(110,0))
     kaishishijian=pygame.time.get_ticks()//1000-time2
     if kaishishijian>time and game_status==0:
-        rect = pygame.Rect(s,0,48,48)
+        rect = pygame.Rect(s,0,64,64)
         screen.fill((200,200,200), rect)
         pygame.display.update(rect)
         time=kaishishijian
@@ -78,7 +78,7 @@ def drawHead():
                 a=a*10
         else:
             d=1
-        s=288-d*23
+        s=288-d*30
         time1=str(time)
         font1=pygame.font.SysFont(None,48)
         text2=font1.render(time1,True,(255,0,0))
@@ -167,7 +167,14 @@ while keep_going:
         if leishu==leishu2-1:
             drawshuzi()
             leishu2-=1
-        if leishu2==0:
+        h=0
+        for i in range(len(gezi)):
+            for j in range(len(gezi)):
+                jieguo=zhuangtai[i][j]!=0 and zhuangtai[i][j]!=2
+                if gezi[i][j]!=-1 and jieguo:
+                    h=h+1
+        if h==(81-10):
+            print("你赢了")
             game_status=1
         pygame.display.update()
 pygame.quit()
