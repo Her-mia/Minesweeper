@@ -3,12 +3,16 @@ from msdata import zhuangtai
 from msdata import game_status
 from msdata import makegezi
 from msdata import makezhuangtai
+import tkinter as tk
+from tkinter import messagebox
 import pygame
 leishu=10
 leishu2=10
 pygame.init()
 screen=pygame.display.set_mode([288,360])
 screen.fill((200,200,200))
+root = tk.Tk()
+root.withdraw()
 keep_going=True
 
 starttime=pygame.time.get_ticks()
@@ -100,6 +104,7 @@ def drawGame():
                 if gezi[y][x]==-1:
                     screen.blit(pic11,(y*32,x*32+a))
                     game_status=2
+                    messagebox.showinfo("提示", "您失败了")
                 if gezi[y][x]==0:
                     screen.blit(pic1,(y*32,x*32+a))
                 if gezi[y][x]==1:
@@ -174,7 +179,7 @@ while keep_going:
                 if gezi[i][j]!=-1 and jieguo:
                     h=h+1
         if h==(81-10):
-            print("你赢了")
+            messagebox.showinfo("提示", "您赢了")
             game_status=1
         pygame.display.update()
 pygame.quit()
