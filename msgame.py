@@ -29,14 +29,15 @@ pic6=pygame.image.load("png/grid5.png")
 pic7=pygame.image.load("png/grid6.png")
 pic8=pygame.image.load("png/grid7.png")
 pic9=pygame.image.load("png/grid8.png")
-pic10=pygame.image.load("png/grid.png")
+pic10=pygame.image.load("png/Grid.png")
 pic11=pygame.image.load("png/mineClicked.png")
 pic12=pygame.image.load("png/flag.png")
 pic13=pygame.image.load("png/smiley.png")
 pic14=pygame.image.load("png/sad.png")
+pic15=pygame.image.load("png/mineFalse.png")
 a=72
 def open(x,y):
-    if x<=8 and y<=8 and x>=0 and y>=0:
+    if x<=8 and y<=8 and x>=0 and y>=0 and zhuangtai[x][y] != 2:
         if gezi[x][y] != 0:
             zhuangtai[x][y] = 1
         if gezi[x][y]==0:
@@ -47,7 +48,7 @@ def open(x,y):
                 c=chuli.pop(0)
                 zhuangtai[c[0]][c[1]]=1
                 for i in weizhi:
-                    if c[0]+i[0]<=8 and c[0]+i[0]>=0 and c[1]+i[1]<=8 and c[1]+i[1]>=0 and (c[0]+i[0], c[1]+i[1]) not in chuli and zhuangtai[c[0]+i[0]][c[1]+i[1]]!=1:
+                    if c[0]+i[0]<=8 and c[0]+i[0]>=0 and c[1]+i[1]<=8 and c[1]+i[1]>=0 and (c[0]+i[0], c[1]+i[1]) not in chuli and zhuangtai[c[0]+i[0]][c[1]+i[1]]!=1 and zhuangtai[c[0]+i[0]][c[1]+i[1]]!=2:
                         if gezi[c[0]+i[0]][c[1]+i[1]]==0:
                             chuli.append((c[0]+i[0],c[1]+i[1]))
                         else:
@@ -57,7 +58,28 @@ def drawHead():
     global time
     global game_status
     global s
-    leishu1=str(leishu)
+
+    # 新增：清除地雷数字显示区域
+    mine_count_rect = pygame.Rect(0, 0, 48, 48)  # 地雷数字显示区域
+    screen.fill((200, 200, 200), mine_count_rect)
+
+    # leishu1=str(leishu)
+
+    # 修改：游戏失败时显示正确的地雷数
+    if game_status == 2:
+        # 计算正确标记的地雷数
+        correct_flags = 0
+        for x in range(len(gezi)):
+            for y in range(len(gezi[x])):
+                if zhuangtai[x][y] == 2 and gezi[x][y] == -1:
+                    correct_flags += 1
+        # 显示：总地雷数 - 正确标记数
+        actual_mines_left = 10 - correct_flags
+        leishu1 = str(actual_mines_left)
+    else:
+        # 正常游戏时显示玩家"认为"的剩余地雷数
+        leishu1 = str(leishu)
+        
     font=pygame.font.SysFont(None,48)
     text1=font.render(leishu1,True,(255,0,0))
     screen.blit(text1,(0,0))
@@ -97,14 +119,23 @@ def drawshuzi():
 
 def drawGame():
     global game_status
+
+    # 先检查是否踩到地雷
+    for x in range(len(gezi)):
+        for y in range(len(gezi[x])):
+            if zhuangtai[y][x]==1 and gezi[y][x]==-1:
+                game_status=2
+                messagebox.showinfo("提示", "您失败了")
+    
+    # 展示所有格子
     for x in range(len(gezi)):
         for y in range(len(gezi[x])):
             #打开点击格子
             if zhuangtai[y][x]==1:
                 if gezi[y][x]==-1:
                     screen.blit(pic11,(y*32,x*32+a))
-                    game_status=2
-                    messagebox.showinfo("提示", "您失败了")
+                    # game_status=2
+                    # messagebox.showinfo("提示", "您失败了")
                 if gezi[y][x]==0:
                     screen.blit(pic1,(y*32,x*32+a))
                 if gezi[y][x]==1:
@@ -124,9 +155,16 @@ def drawGame():
                 if gezi[y][x]==8:
                     screen.blit(pic9,(y*32,x*32+a))
             elif zhuangtai[y][x]!=1 and zhuangtai[y][x]!=2:
-                screen.blit(pic10,(y*32,x*32+a))
+                # 增加失败后显示所有地雷功能
+                if game_status==2 and gezi[y][x]==-1:
+                    screen.blit(pic,(y*32,x*32+a))
+                else:
+                    screen.blit(pic10,(y*32,x*32+a))
             elif zhuangtai[y][x]!=1:
-                screen.blit(pic12,(y*32,x*32+a))
+                if game_status==2 and gezi[y][x]==-1:
+                    screen.blit(pic15,(y*32,x*32+a))
+                else:
+                    screen.blit(pic12,(y*32,x*32+a))
 
 
 
@@ -160,12 +198,20 @@ while keep_going:
                     x=spot[0]//32
                     y=spot[1]//32-a//32
                     open(x,y)
-                if event.button == 3 and leishu!=-1:
+                if event.button == 3 and leishu!=0:
                     spot=event.pos
                     x=spot[0]//32
                     y=spot[1]//32-a//32
-                    zhuangtai[x][y]=2 
-                    leishu-=1
+                    # zhuangtai[x][y]=2 
+                    # leishu-=1
+
+                    # 只对未打开的格子进行操作
+                    if zhuangtai[x][y] == 0:  # 未标记的格子 -> 标记为旗帜
+                        zhuangtai[x][y] = 2
+                        leishu -= 1
+                    elif zhuangtai[x][y] == 2:  # 已标记的格子 -> 取消标记
+                        zhuangtai[x][y] = 0
+                        leishu += 1
 
         drawGame()
         drawHead()
